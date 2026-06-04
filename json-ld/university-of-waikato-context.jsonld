@@ -1,0 +1,108 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "waikato": "https://www.waikato.ac.nz/#",
+    "schema": "https://schema.org/",
+    "apis": "https://apievangelist.com/vocab#",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "name": "schema:name",
+    "alternateName": "schema:alternateName",
+    "description": "schema:description",
+    "url": "schema:url",
+    "foundingDate": "schema:foundingDate",
+    "location": "schema:location",
+    "address": "schema:address",
+    "sameAs": "schema:sameAs",
+    "WebAPI": "schema:WebAPI",
+    "api": {
+      "@id": "apis:api",
+      "@type": "@id"
+    },
+    "apiName": "schema:name",
+    "documentation": {
+      "@id": "schema:documentation",
+      "@type": "@id"
+    },
+    "endpointURL": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    },
+    "DataCatalog": "schema:DataCatalog",
+    "Dataset": "schema:Dataset",
+    "CreativeWork": "schema:CreativeWork",
+    "Thesis": "schema:Thesis",
+    "ScholarlyArticle": "schema:ScholarlyArticle",
+    "identifier": "schema:identifier",
+    "dateModified": "schema:dateModified"
+  },
+  "@type": "CollegeOrUniversity",
+  "@id": "https://www.waikato.ac.nz/#organization",
+  "name": "University of Waikato",
+  "alternateName": "Te Whare Wananga o Waikato",
+  "description": "A public research university in Hamilton, New Zealand, founded in 1964. Its developer footprint is anchored by the DSpace 7.6.5 Research Commons institutional repository (REST and OAI-PMH), an IT Services One-Time Secret API, a campus identity provider, and the User-friendly Deep Learning (UFDL) research framework.",
+  "url": "https://www.waikato.ac.nz/",
+  "foundingDate": "1964",
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hamilton",
+      "addressCountry": "NZ"
+    }
+  },
+  "sameAs": [
+    "https://github.com/Waikato",
+    "https://www.linkedin.com/school/universityofwaikato/",
+    "https://twitter.com/waikato"
+  ],
+  "api": [
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.waikato.ac.nz/#api-research-commons-rest",
+      "apiName": "Research Commons REST API",
+      "description": "DSpace 7.6.5 REST API exposing communities, collections, items, bitstreams and discovery search over the university's research publications and theses.",
+      "documentation": "https://researchcommons.waikato.ac.nz/server/api",
+      "endpointURL": "https://researchcommons.waikato.ac.nz/server/api",
+      "provider": "https://www.waikato.ac.nz/#organization"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.waikato.ac.nz/#api-research-commons-oai",
+      "apiName": "Research Commons OAI-PMH",
+      "description": "OAI-PMH 2.0 metadata harvesting endpoint for Research Commons supporting Dublin Core and related metadata formats.",
+      "documentation": "https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify",
+      "endpointURL": "https://researchcommons.waikato.ac.nz/server/oai/request",
+      "provider": "https://www.waikato.ac.nz/#organization"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.waikato.ac.nz/#api-ots",
+      "apiName": "One-Time Secret (OTS) API",
+      "description": "IT Services REST API for creating and retrieving one-time secrets over HTTPS with HTTP Basic Authentication.",
+      "documentation": "https://otis.its.waikato.ac.nz/docs/api",
+      "endpointURL": "https://otis.its.waikato.ac.nz/api",
+      "provider": "https://www.waikato.ac.nz/#organization"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.waikato.ac.nz/#api-ufdl",
+      "apiName": "User-friendly Deep Learning (UFDL) API",
+      "description": "JSON REST API for the UFDL framework covering authentication, projects, teams, job templates, scheduling and dataset management for image classification, object detection and speech.",
+      "documentation": "https://ufdl.cms.waikato.ac.nz/ufdl-api/",
+      "provider": "https://www.waikato.ac.nz/#organization"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.waikato.ac.nz/#api-identity",
+      "apiName": "University of Waikato Identity Provider (uowidp)",
+      "description": "Campus single sign-on / identity provider service for authenticating to institutional services; access gated to university accounts.",
+      "documentation": "https://api.svc.waikato.ac.nz/uowidp/v1/login",
+      "endpointURL": "https://api.svc.waikato.ac.nz/uowidp/v1/login",
+      "provider": "https://www.waikato.ac.nz/#organization"
+    }
+  ]
+}

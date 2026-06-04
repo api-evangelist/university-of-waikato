@@ -1,0 +1,14 @@
+{
+  "repo": "university-of-waikato",
+  "feeds": [
+    {
+      "source": "https://www.waikato.ac.nz/news-opinion/",
+      "feed_url": "https://www.waikato.ac.nz/news-opinion/",
+      "title": "University of Waikato News",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}
