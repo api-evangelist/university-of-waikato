@@ -1,0 +1,48 @@
+---
+name: University of Waikato
+description: University of Waikato public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-waikato/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      Verified a real, multi-service developer footprint rather than a single
+      consolidated API program. Live and confirmed: the Research Commons DSpace
+      7.6.5 REST API and its OAI-PMH 2.0 Identify endpoint (repositoryName
+      "Research Commons"), the IT Services One-Time Secret (OTS) API docs, the
+      UFDL deep learning framework API docs, and the uowidp identity/SSO login
+      endpoint. The GitHub org github.com/Waikato (Computing and Mathematical
+      Sciences, 30 repos) exists. No fabricated endpoints; OTS and identity are
+      account-gated, and the originally probed legacy OAI path returned 404 (the
+      working path is /server/oai/request). No single unified developer portal
+      was found.
+    endpoints:
+      - url: https://www.waikato.ac.nz/
+        status: 200
+        note: Official institutional website resolved.
+      - url: https://researchcommons.waikato.ac.nz/server/api
+        status: 200
+        note: DSpace 7.6.5 REST API root; reports dspaceName "Research Commons".
+      - url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+        status: 200
+        note: OAI-PMH 2.0 Identify; repositoryName "Research Commons", earliest 1972.
+      - url: https://researchcommons.waikato.ac.nz/oai/request?verb=Identify
+        status: 404
+        note: Legacy DSpace 6 OAI path not present on DSpace 7; superseded by /server.
+      - url: https://otis.its.waikato.ac.nz/docs/api
+        status: 200
+        note: One-Time Secret API docs; JSON over HTTPS, HTTP Basic auth (Stella token).
+      - url: https://ufdl.cms.waikato.ac.nz/
+        status: 200
+        note: UFDL framework host; API docs at /ufdl-api/, work in progress.
+      - url: https://api.svc.waikato.ac.nz/uowidp/v1/login
+        status: 200
+        note: Identity provider / SSO sign-in endpoint; account-gated.
+      - url: https://github.com/Waikato
+        status: 200
+        note: Official Computing and Mathematical Sciences GitHub org, 30 repositories.
+      - url: https://www.linkedin.com/school/universityofwaikato/
+        status: 999
+        note: LinkedIn school page; 999 is LinkedIn bot-block, page exists.

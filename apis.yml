@@ -1,0 +1,126 @@
+---
+aid: university-of-waikato
+name: University of Waikato
+description: >-
+  The University of Waikato (Te Whare Wananga o Waikato) is a public research
+  university in Hamilton, New Zealand, founded in 1964 and ranked #235 in the QS
+  World University Rankings 2025. Its publicly observable developer/API footprint
+  is anchored by its DSpace 7.6.5 institutional repository, Research Commons,
+  which exposes a documented REST API and an OAI-PMH 2.0 interface, alongside
+  operational APIs run by IT Services (a One-Time Secret API and a campus
+  identity/SSO provider) and research-software APIs from its Computing and
+  Mathematical Sciences faculty (notably the User-friendly Deep Learning
+  framework). There is no single consolidated developer portal; most APIs are
+  service-specific and several require institutional accounts.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-waikato/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Institutional Repository
+  - Open Access
+  - New Zealand
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-waikato:research-commons-rest
+    name: Research Commons REST API
+    description: >-
+      DSpace 7.6.5 REST API for the University of Waikato's Research Commons open
+      access institutional repository, providing programmatic access to
+      communities, collections, items, bitstreams and discovery search over the
+      university's research publications and theses. The API root reports
+      dspaceVersion "DSpace 7.6.5" and resolved live during review.
+    humanURL: https://researchcommons.waikato.ac.nz/
+    baseURL: https://researchcommons.waikato.ac.nz/server/api
+    tags: [ Repository, DSpace, Research, Open Access, Scholarly ]
+    properties:
+      - type: Documentation
+        url: https://researchcommons.waikato.ac.nz/server/api
+  - aid: university-of-waikato:research-commons-oai
+    name: Research Commons OAI-PMH
+    description: >-
+      OAI-PMH 2.0 metadata harvesting endpoint for Research Commons. An Identify
+      request returns repositoryName "Research Commons" with baseURL
+      https://researchcommons.waikato.ac.nz/server/oai/request and an earliest
+      datestamp of 1972, supporting standard verbs for harvesting Dublin Core and
+      related metadata formats.
+    humanURL: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+    baseURL: https://researchcommons.waikato.ac.nz/server/oai/request
+    tags: [ OAI-PMH, Metadata Harvesting, Repository, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+  - aid: university-of-waikato:ots
+    name: One-Time Secret (OTS) API
+    description: >-
+      REST API operated by University of Waikato IT Services for creating and
+      managing one-time secrets that can be shared securely and retrieved only
+      once before being deleted. All requests use JSON over HTTPS and require HTTP
+      Basic Authentication with a Stella account username and an API token. The
+      documentation page resolved live during review.
+    humanURL: https://otis.its.waikato.ac.nz/docs/api
+    baseURL: https://otis.its.waikato.ac.nz/api
+    tags: [ Security, Secrets, IT Services, Utility ]
+    properties:
+      - type: Documentation
+        url: https://otis.its.waikato.ac.nz/docs/api
+      - type: Authentication
+        url: https://otis.its.waikato.ac.nz/docs/api
+  - aid: university-of-waikato:ufdl
+    name: User-friendly Deep Learning (UFDL) API
+    description: >-
+      JSON REST API for the University of Waikato's User-friendly Deep Learning
+      (UFDL) framework, developed by the Faculty of Computing and Mathematical
+      Sciences to make deep learning more accessible to domain experts. The API
+      covers authentication, projects, teams and users; job templates, scheduling
+      and outputs; and dataset management for image classification, object
+      detection and speech. Documentation is described as work in progress.
+    humanURL: https://ufdl.cms.waikato.ac.nz/ufdl-api/
+    tags: [ Machine Learning, Deep Learning, Research, Data Science ]
+    properties:
+      - type: Documentation
+        url: https://ufdl.cms.waikato.ac.nz/ufdl-api/
+      - type: GitHub
+        url: https://github.com/waikato-ufdl
+  - aid: university-of-waikato:identity
+    name: University of Waikato Identity Provider (uowidp)
+    description: >-
+      Campus single sign-on / identity provider service hosted at
+      api.svc.waikato.ac.nz under the uowidp path. The v1 login endpoint resolved
+      live during review and serves a University of Waikato sign-in interface for
+      authenticating to institutional services. Access is gated to university
+      accounts; no public developer documentation was located.
+    humanURL: https://api.svc.waikato.ac.nz/uowidp/v1/login
+    tags: [ Identity, SSO, Authentication, Gated ]
+    properties:
+      - type: Documentation
+        url: https://api.svc.waikato.ac.nz/uowidp/v1/login
+common:
+  - type: Website
+    url: https://www.waikato.ac.nz/
+  - type: GitHub
+    url: https://github.com/Waikato
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/universityofwaikato/
+  - type: Twitter
+    url: https://twitter.com/waikato
+  - type: SourceCode
+    url: https://github.com/Waikato/waikato-repositories
+  - type: Plans
+    url: plans/university-of-waikato-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-waikato-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-waikato-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
