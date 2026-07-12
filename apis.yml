@@ -103,6 +103,8 @@ apis:
       - type: Documentation
         url: https://api.svc.waikato.ac.nz/uowidp/v1/login
 common:
+  - type: DomainSecurity
+    url: security/university-of-waikato-domain-security.yml
   - type: Website
     url: https://www.waikato.ac.nz/
   - type: GitHub
