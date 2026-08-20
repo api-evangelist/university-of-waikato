@@ -95,7 +95,16 @@ apis:
       and outputs; and dataset management for image classification, object
       detection and speech. Documentation is described as work in progress.
     humanURL: https://ufdl.cms.waikato.ac.nz/ufdl-api/
-    tags: [ Machine Learning, Deep Learning, Research, Data Science ]
+    tags:
+    - Machine-Learning
+    - Deep Learning
+    - Research
+    - Data Science
+    tags_raw:
+    - Machine Learning
+    - Deep Learning
+    - Research
+    - Data Science
     properties:
       - type: Documentation
         url: https://ufdl.cms.waikato.ac.nz/ufdl-api/
