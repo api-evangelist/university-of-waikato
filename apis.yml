@@ -13,6 +13,18 @@ description: >-
   framework). There is no single consolidated developer portal; most APIs are
   service-specific and several require institutional accounts.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: unknown
@@ -124,6 +136,8 @@ apis:
       - type: Documentation
         url: https://api.svc.waikato.ac.nz/uowidp/v1/login
 common:
+  - type: IssueTracker
+    url: https://github.com/Waikato/waikato-repositories/issues
   - type: DomainSecurity
     url: security/university-of-waikato-domain-security.yml
   - type: Website
