@@ -1,155 +1,478 @@
 ---
 aid: university-of-waikato
 name: University of Waikato
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Waikato (Te Whare Wananga o Waikato) is a public research
-  university in Hamilton, New Zealand, founded in 1964 and ranked #235 in the QS
-  World University Rankings 2025. Its publicly observable developer/API footprint
-  is anchored by its DSpace 7.6.5 institutional repository, Research Commons,
-  which exposes a documented REST API and an OAI-PMH 2.0 interface, alongside
-  operational APIs run by IT Services (a One-Time Secret API and a campus
-  identity/SSO provider) and research-software APIs from its Computing and
-  Mathematical Sciences faculty (notably the User-friendly Deep Learning
-  framework). There is no single consolidated developer portal; most APIs are
-  service-specific and several require institutional accounts.
+  The University of Waikato (Te Whare Wananga o Waikato) is a public research university in
+  Hamilton and Tauranga, Aotearoa New Zealand, founded in 1964. It runs no developer programme, no
+  developer portal and no self-serve public API, and this profile says so plainly. What it does
+  operate itself is narrow but real and unusually well evidenced for this cohort: an OpenID Connect
+  provider of its own on api.svc.waikato.ac.nz/uowidp/v1, publishing a live discovery document and
+  JWKS and used by the university's own Blazor timetable and its MyWaikato student portal; Research
+  Commons, a DSpace 7.6.5 institutional repository on its own host serving a DSpace REST API and an
+  OAI-PMH 2.0 interface with twelve metadata formats back to 1972; a One-Time Secret API run by IT
+  Services with documented endpoints under HTTP Basic against a Stella account; a Moodle LMS acting
+  as an LTI 1.3 platform with live platform keys; and the UFDL deep-learning framework API from the
+  Computing and Mathematical Sciences faculty, alongside four active GitHub organisations
+  (Waikato, waikato-ufdl, waikato-datamining, waikato-llm) that include WEKA. Its identity is
+  federated twice over — a Shibboleth IdP entity registered in Tuakiri since 2012 with REFEDS
+  Research & Scholarship and Sirtfi, exported to eduGAIN, and a Microsoft Entra ID tenant that is
+  the live SAML issuer for eLearn. The university also publishes an llms.txt with explicit
+  attribution and generative-model usage terms, which almost no institution in this cohort does.
+  Everything else that looks like a Waikato API is a tenancy on somebody else's platform —
+  Symplectic Discovery behind profiles.waikato.ac.nz, Ex Libris Primo VE, Springshare LibGuides
+  behind libraryguides.waikato.ac.nz, and waikato.figshare.com — and is recorded here as a
+  relationship, never as a University of Waikato contract.
 type: Index
 deliveryModel:
-  model: unknown
-  open_source: unknown
-  commercial: true
-  callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  model: self-hosted
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Institution-operated infrastructure · not sold as an API product
+  confidence: medium
   source:
-  - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: none
   trial: false
   try_now: false
   public: false
-  label: Free
-  confidence: medium
+  label: No public developer programme · open protocol endpoints, otherwise affiliation-gated
+  confidence: high
   source:
+  - probed
   - plans
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-09-01'
+  method: probed
 position: Consumer
-access: 3rd-Party
+access: Internal
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-waikato.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-waikato/refs/heads/main/apis.yml
 tags:
   - Education
   - Higher Education
   - University
-  - Research
-  - Institutional Repository
-  - Open Access
   - New Zealand
+  - Research
+  - Research Repository
+  - Open Access
+  - OAI-PMH
+  - Identity Federation
+  - SAML
+  - OpenID Connect
+  - Learning Management
+  - Machine Learning
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-waikato:research-commons-rest
-    name: Research Commons REST API
-    description: >-
-      DSpace 7.6.5 REST API for the University of Waikato's Research Commons open
-      access institutional repository, providing programmatic access to
-      communities, collections, items, bitstreams and discovery search over the
-      university's research publications and theses. The API root reports
-      dspaceVersion "DSpace 7.6.5" and resolved live during review.
-    humanURL: https://researchcommons.waikato.ac.nz/
-    baseURL: https://researchcommons.waikato.ac.nz/server/api
-    tags: [ Repository, DSpace, Research, Open Access, Scholarly ]
-    properties:
-      - type: Documentation
-        url: https://researchcommons.waikato.ac.nz/server/api
-  - aid: university-of-waikato:research-commons-oai
-    name: Research Commons OAI-PMH
-    description: >-
-      OAI-PMH 2.0 metadata harvesting endpoint for Research Commons. An Identify
-      request returns repositoryName "Research Commons" with baseURL
-      https://researchcommons.waikato.ac.nz/server/oai/request and an earliest
-      datestamp of 1972, supporting standard verbs for harvesting Dublin Core and
-      related metadata formats.
-    humanURL: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
-    baseURL: https://researchcommons.waikato.ac.nz/server/oai/request
-    tags: [ OAI-PMH, Metadata Harvesting, Repository, Open Access ]
-    properties:
-      - type: Documentation
-        url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
-  - aid: university-of-waikato:ots
-    name: One-Time Secret (OTS) API
-    description: >-
-      REST API operated by University of Waikato IT Services for creating and
-      managing one-time secrets that can be shared securely and retrieved only
-      once before being deleted. All requests use JSON over HTTPS and require HTTP
-      Basic Authentication with a Stella account username and an API token. The
-      documentation page resolved live during review.
-    humanURL: https://otis.its.waikato.ac.nz/docs/api
-    baseURL: https://otis.its.waikato.ac.nz/api
-    tags: [ Security, Secrets, IT Services, Utility ]
-    properties:
-      - type: Documentation
-        url: https://otis.its.waikato.ac.nz/docs/api
-      - type: Authentication
-        url: https://otis.its.waikato.ac.nz/docs/api
-  - aid: university-of-waikato:ufdl
-    name: User-friendly Deep Learning (UFDL) API
-    description: >-
-      JSON REST API for the University of Waikato's User-friendly Deep Learning
-      (UFDL) framework, developed by the Faculty of Computing and Mathematical
-      Sciences to make deep learning more accessible to domain experts. The API
-      covers authentication, projects, teams and users; job templates, scheduling
-      and outputs; and dataset management for image classification, object
-      detection and speech. Documentation is described as work in progress.
-    humanURL: https://ufdl.cms.waikato.ac.nz/ufdl-api/
-    tags:
-    - Machine-Learning
-    - Deep Learning
-    - Research
-    - Data Science
-    tags_raw:
-    - Machine Learning
-    - Deep Learning
-    - Research
-    - Data Science
-    properties:
-      - type: Documentation
-        url: https://ufdl.cms.waikato.ac.nz/ufdl-api/
-      - type: GitHub
-        url: https://github.com/waikato-ufdl
-  - aid: university-of-waikato:identity
-    name: University of Waikato Identity Provider (uowidp)
-    description: >-
-      Campus single sign-on / identity provider service hosted at
-      api.svc.waikato.ac.nz under the uowidp path. The v1 login endpoint resolved
-      live during review and serves a University of Waikato sign-in interface for
-      authenticating to institutional services. Access is gated to university
-      accounts; no public developer documentation was located.
-    humanURL: https://api.svc.waikato.ac.nz/uowidp/v1/login
-    tags: [ Identity, SSO, Authentication, Gated ]
-    properties:
-      - type: Documentation
-        url: https://api.svc.waikato.ac.nz/uowidp/v1/login
+- aid: university-of-waikato:uowidp
+  name: University of Waikato Identity Provider (uowidp)
+  x-operator: institution
+  description: >-
+    The university's own OpenID Connect 1.0 provider, on its own API gateway at
+    api.svc.waikato.ac.nz/uowidp/v1. Verified live 2026-09-01: the discovery document returns HTTP
+    200 declaring issuer https://api.svc.waikato.ac.nz/uowidp/v1, authorization, token, logout and
+    JWKS endpoints, scopes_supported [openid, profile, email], response types [code, id_token,
+    code id_token], RS256 id_token signing and client_secret_post client authentication; the JWKS
+    returns a live RSA signing key. It is a real institution surface with real consumers — the
+    ITS-built Blazor timetable declares client_id timetable-prod in its own appsettings.json, and
+    my.waikato.ac.nz (SITS:Vision) redirects here with client_id SITS-Prod. The provider fronts the
+    university's Microsoft Entra ID tenant: userinfo_endpoint is graph.microsoft.com/v1.0/me and
+    the claim set carries Entra's oid and ver. Client registration is closed — no
+    registration_endpoint, no dynamic client registration, no documentation page. This is the one
+    machine-readable contract on this estate that the institution both operates and publishes.
+  humanURL: https://www.waikato.ac.nz/students/it-services/
+  baseURL: https://api.svc.waikato.ac.nz/uowidp/v1
+  tags:
+  - Identity
+  - OpenID Connect
+  - Single Sign-On
+  - Authentication
+  - API Gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-waikato-uowidp-openapi.yml
+  - type: Documentation
+    url: https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration
+  - type: Authentication
+    url: authentication/university-of-waikato-authentication.yml
+  - type: Scopes
+    url: scopes/university-of-waikato-scopes.yml
+  - type: JSONSchema
+    url: json-schema/university-of-waikato-uowidp-provider-metadata.json
+  - type: Examples
+    url: examples/university-of-waikato-uowidp-discovery-example.json
+  - type: Errors
+    url: errors/university-of-waikato-errors.yml
+- aid: university-of-waikato:research-commons-oai
+  name: Research Commons OAI-PMH
+  x-operator: institution
+  description: >-
+    OAI-PMH 2.0 metadata harvesting interface for Research Commons, the university's open-access
+    institutional repository, on the institution's own host. Verified live 2026-09-01: verb=Identify
+    returns protocolVersion 2.0, repositoryName "Research Commons", repositoryIdentifier
+    researchcommons.waikato.ac.nz, sampleIdentifier oai:researchcommons.waikato.ac.nz:10289/1234
+    (Handle prefix 10289), deletedRecord transient and earliestDatestamp 1972-12-31.
+    verb=ListMetadataFormats advertises didl, dim, etdms, marc, mets, mods, oai_dc, ore, qdc, rdf,
+    uketd_dc and xoai. The adminEmail is data@prosentient.com.au — the DSpace deployment is managed
+    for the university by Prosentient Systems. The host, the Handle namespace and the content are
+    the institution's; the OAI-PMH protocol is OpenArchives' and no contract is claimed for it.
+  humanURL: https://researchcommons.waikato.ac.nz/
+  baseURL: https://researchcommons.waikato.ac.nz/server/oai/request
+  tags:
+  - OAI-PMH
+  - Metadata Harvesting
+  - Repository
+  - Open Access
+  - DSpace
+  properties:
+  - type: Documentation
+    url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+  - type: x-conformance
+    url: conformance/university-of-waikato-conformance.yml
+  - type: Examples
+    url: examples/university-of-waikato-protocol-endpoints-example.json
+- aid: university-of-waikato:research-commons-rest
+  name: Research Commons DSpace REST API
+  x-operator: institution
+  description: >-
+    DSpace 7.6.5 REST API backing Research Commons, giving programmatic access to communities,
+    collections, items, bitstreams and discovery search over the university's theses and research
+    outputs. Verified live 2026-09-01: the API root returns HTTP 200 with dspaceName "Research
+    Commons", dspaceVersion "DSpace 7.6.5" and a HAL document advertising 65 links. No ORCID
+    endpoints are exposed. The contract is DSpace's — the same REST contract every DSpace 7
+    deployment ships — so no OpenAPI is saved under this institution; what is Waikato's is the
+    deployment, the host and the content.
+  humanURL: https://researchcommons.waikato.ac.nz/
+  baseURL: https://researchcommons.waikato.ac.nz/server/api
+  tags:
+  - Repository
+  - DSpace
+  - Research
+  - Open Access
+  - Scholarly
+  properties:
+  - type: Documentation
+    url: https://researchcommons.waikato.ac.nz/server/api
+  - type: Examples
+    url: examples/university-of-waikato-protocol-endpoints-example.json
+- aid: university-of-waikato:elearn-lti
+  name: eLearn LTI 1.3 Platform (Moodle)
+  x-operator: institution
+  description: >-
+    eLearn, the university's Moodle learning management system on its own registrable domain, acts
+    as an LTI 1.3 platform. Verified live 2026-09-01: /mod/lti/certs.php returns HTTP 200 with a
+    JSON Web Key Set carrying one RSA key (alg RS256, kid 9b45a1370943b0323a6b),
+    /mod/lti/auth.php responds HTTP 200, and /mod/lti/token.php returns HTTP 400 to a parameterless
+    GET. Moodle's REST web service endpoint is enabled and returns its standard missingparam fault
+    without a wstoken. Unauthenticated access to the LMS itself redirects to the university's
+    Microsoft Entra ID tenant over SAML 2.0. The LTI implementation is Moodle's; the deployment,
+    the keys and the tool registrations are the institution's. This is the estate's evidence for
+    the `lti` domain standard in the Kin Score education regime.
+  humanURL: https://elearn.waikato.ac.nz/
+  baseURL: https://elearn.waikato.ac.nz/mod/lti/certs.php
+  tags:
+  - Learning Management
+  - LTI
+  - Moodle
+  - Authentication
+  properties:
+  - type: x-conformance
+    url: conformance/university-of-waikato-conformance.yml
+  - type: Examples
+    url: examples/university-of-waikato-protocol-endpoints-example.json
+- aid: university-of-waikato:ots
+  name: One-Time Secret (OTS) API
+  x-operator: institution
+  description: >-
+    A One-Time Secret service run by University of Waikato IT Services on its own host, for sharing
+    a secret that can be retrieved exactly once. The published API page enumerates a complete
+    endpoint set on the institution's base URI https://otis.its.waikato.ac.nz/api — GET /v1/status,
+    POST /v1/share, POST /v1/generate, POST /v1/secret/{key}, POST /v1/private/{metadata_key},
+    POST /v1/private/{metadata_key}/burn and GET /v1/private/recent — all JSON over HTTPS under HTTP
+    Basic with a Stella account username and an API token. Verified live 2026-09-01, HTTP 200; the
+    page marks itself "BETA API - updated 2017-04-27". The software is the open-source One-Time
+    Secret application, so the API shape originates with that project rather than with the
+    university; no OpenAPI is generated under this institution for it. The deployment, the host and
+    the institutional credential are Waikato's.
+  humanURL: https://otis.its.waikato.ac.nz/docs/api
+  baseURL: https://otis.its.waikato.ac.nz/api
+  tags:
+  - Security
+  - Secrets
+  - IT Services
+  - Utility
+  properties:
+  - type: Documentation
+    url: https://otis.its.waikato.ac.nz/docs/api
+  - type: Authentication
+    url: authentication/university-of-waikato-authentication.yml
+- aid: university-of-waikato:ufdl
+  name: User-friendly Deep Learning (UFDL) API
+  x-operator: institution
+  description: >-
+    JSON REST API for the User-friendly Deep Learning framework built by the University of Waikato's
+    Faculty of Computing and Mathematical Sciences to make deep learning accessible to domain
+    experts. Documentation covers authentication, projects, teams and users; CUDA, Docker images,
+    frameworks, hardware, licences, nodes and pretrained models; job templates, jobs, job outputs
+    and job types; and datasets for image classification, image segmentation, object detection and
+    speech, plus filtering and permissions. Verified live 2026-09-01, HTTP 200. Institution-built
+    and institution-owned: the documentation host ufdl.cms.waikato.ac.nz CNAMEs to
+    waikato-ufdl.github.io, a GitHub Pages site under the university's own faculty organisation —
+    a code host, not a vendor. The project's own documentation states it is work in progress; no
+    machine-readable specification is published and none is generated here.
+  humanURL: https://ufdl.cms.waikato.ac.nz/ufdl-api/
+  tags:
+  - Machine-Learning
+  - Deep Learning
+  - Research
+  - Data Science
+  tags_raw:
+  - Machine Learning
+  - Deep Learning
+  - Research
+  - Data Science
+  properties:
+  - type: Documentation
+    url: https://ufdl.cms.waikato.ac.nz/ufdl-api/
+  - type: GitHub
+    url: https://github.com/waikato-ufdl
+- aid: university-of-waikato:tuakiri-idp
+  name: Waikato SAML 2.0 Identity Provider in Tuakiri
+  x-operator: federation
+  description: >-
+    The University of Waikato's Shibboleth Identity Provider, entityID
+    https://idp.waikato.ac.nz/idp/shibboleth, registered in the signed Tuakiri (New Zealand Access
+    Federation) metadata aggregate since 2012-10-15 under registrationAuthority
+    https://tuakiri.ac.nz/. The entry carries mdui:DisplayName "The University of Waikato",
+    shibmd:Scope waikato.ac.nz, the REFEDS Research & Scholarship entity category and REFEDS Sirtfi
+    assurance certification, and it is exported to eduGAIN — verified in both aggregates
+    2026-09-01. The identity, the users and the attribute release are the institution's. The IdP
+    deployment is not: every SingleSignOnService and SingleLogoutService Location resolves to
+    hosted-login.tuakiri.ac.nz/hosting/waikato.ac.nz/idp/ and the signing certificate CN is
+    hosted-login.tuakiri.ac.nz/hosting/waikato.ac.nz, so the university runs on REANNZ's Tuakiri
+    Hosted IdP service. Recorded as the institution's federation membership, not as its engineering.
+  humanURL: https://tuakiri.ac.nz/
+  baseURL: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+  x-deployment-host: hosted-login.tuakiri.ac.nz/hosting/waikato.ac.nz/idp/ (REANNZ Tuakiri Hosted IdP)
+  tags:
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - Single Sign-On
+  - Metadata
+  properties:
+  - type: Documentation
+    url: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+  - type: x-conformance
+    url: conformance/university-of-waikato-conformance.yml
+- aid: university-of-waikato:entra-tenant
+  name: University of Waikato Microsoft Entra ID Tenant
+  x-operator: federation
+  description: >-
+    The university's Microsoft Entra ID tenant, 220f5dc3-9452-48e5-9b4f-888df42f7a2d, is the
+    identity source behind both the uowidp OpenID Connect provider and the eLearn Moodle SAML
+    login. Verified live 2026-09-01: the tenant OpenID configuration returns HTTP 200 with issuer
+    https://login.microsoftonline.com/220f5dc3-9452-48e5-9b4f-888df42f7a2d/v2.0, tenant_region_scope
+    OC; the WS-Federation/SAML 2.0 federation metadata returns HTTP 200 and 28,441 bytes; and an
+    unauthenticated request to elearn.waikato.ac.nz redirects to the tenant's saml2 endpoint with a
+    signed RSA-SHA256 AuthnRequest. The tenant is the institution's; the platform and its contract
+    are Microsoft's, and nothing is saved here under Waikato's slug for it.
+  humanURL: https://www.waikato.ac.nz/students/it-services/
+  baseURL: https://login.microsoftonline.com/220f5dc3-9452-48e5-9b4f-888df42f7a2d/v2.0
+  tags:
+  - Identity Federation
+  - SAML
+  - OpenID Connect
+  - Entra ID
+  - Single Sign-On
+  properties:
+  - type: Documentation
+    url: https://login.microsoftonline.com/220f5dc3-9452-48e5-9b4f-888df42f7a2d/v2.0/.well-known/openid-configuration
+  - type: x-conformance
+    url: conformance/university-of-waikato-conformance.yml
+- aid: university-of-waikato:crossref-member
+  name: Crossref Membership (member 6347)
+  x-operator: registry
+  description: >-
+    The University of Waikato is a Crossref member — member id 6347, primary name "University of
+    Waikato", DOI prefix 10.15663. Verified 2026-09-01 against api.crossref.org/members. This is a
+    membership the institution holds in a shared identifier registry and is a fact about the
+    institution, not a misattribution: Crossref's API is Crossref's and no contract is saved here.
+    Recorded because DOI registration is a real, machine-readable institutional surface and the
+    `crossref` domain standard in the Kin Score education regime reads exactly this.
+  humanURL: https://www.crossref.org/
+  baseURL: https://api.crossref.org/members/6347
+  tags:
+  - Identifiers
+  - DOI
+  - Scholarly
+  - Registry
+  properties:
+  - type: Documentation
+    url: https://api.crossref.org/members/6347
+  - type: x-conformance
+    url: conformance/university-of-waikato-conformance.yml
+- aid: university-of-waikato:ror
+  name: ROR Registration (ror.org/013fsnh78)
+  x-operator: registry
+  description: >-
+    The University of Waikato is registered in the Research Organization Registry as
+    https://ror.org/013fsnh78, with names "University of Waikato" and "Te Whare Wananga o Waikato"
+    and website https://www.waikato.ac.nz. Verified 2026-09-01 against the ROR v2 API. ROR is a
+    registry the institution is registered in, shared by every research organisation in the world;
+    the record about Waikato is theirs, the API is ROR's, and no contract is saved here.
+  humanURL: https://ror.org/013fsnh78
+  baseURL: https://api.ror.org/v2/organizations/013fsnh78
+  tags:
+  - Identifiers
+  - Registry
+  - Research
+  - Open Data
+  properties:
+  - type: Documentation
+    url: https://api.ror.org/v2/organizations/013fsnh78
+- aid: university-of-waikato:symplectic-discovery
+  name: Waikato Research Profiles on Symplectic Discovery (tenant)
+  x-operator: tenant
+  description: >-
+    profiles.waikato.ac.nz is the university's researcher-profile and research-information service,
+    and it is a tenancy: the host CNAMEs to waikato.discovery.symplectic.org, on Digital Science's
+    Symplectic Discovery platform (image tag web-v7.2.0.2 observed in the served markup). Verified
+    live 2026-09-01, HTTP 200. The researchers, the outputs and the curation are the institution's;
+    the application and any API contract are Symplectic's, served from Symplectic infrastructure,
+    and are not saved under this institution. /api on that host returns the SPA shell, not an API
+    — a soft 200, credited to nobody. This tenancy was not visible to the host-based audit because
+    the hostname is under waikato.ac.nz; it was found by DNS resolution during this run.
+  humanURL: https://profiles.waikato.ac.nz/
+  baseURL: https://profiles.waikato.ac.nz/
+  tags:
+  - Research Information
+  - Researcher Profiles
+  - Symplectic
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://profiles.waikato.ac.nz/
+- aid: university-of-waikato:primo-discovery
+  name: Waikato Library Discovery on Ex Libris Primo VE (tenant)
+  x-operator: tenant
+  description: >-
+    The University of Waikato Library's discovery layer is a named tenancy on Ex Libris's shared
+    Primo VE platform — waikato.primo.exlibrisgroup.com with view code
+    vid=64WAIKATO_INST:64WAIKATO, verified live 2026-09-01, HTTP 200. The collection, the holdings
+    and the institution view are the university's; the Primo and Alma API contracts are Ex Libris's
+    and belong in Ex Libris's own repository, not here. Recorded as a relationship so the
+    institution gets credit for operating a library discovery surface without being credited for
+    Ex Libris's engineering.
+  humanURL: https://waikato.primo.exlibrisgroup.com/discovery/search?vid=64WAIKATO_INST:64WAIKATO
+  baseURL: https://waikato.primo.exlibrisgroup.com/
+  tags:
+  - Library
+  - Discovery
+  - Ex Libris
+  - Primo
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://www.waikato.ac.nz/students/library/
+- aid: university-of-waikato:figshare-tenant
+  name: Waikato Figshare Research Data Repository (tenant)
+  x-operator: tenant
+  description: >-
+    waikato.figshare.com resolves (CNAME to figshare.com) and answers HTTP 202 with an empty body —
+    a bot-management challenge, so the tenancy is live but not readable by us. This is the
+    institution's Figshare research-data tenancy. It is recorded here as a relationship only. The
+    Figshare API v2 contract lives on the shared vendor host api.figshare.com/v2 that every
+    Figshare customer calls, it belongs to Figshare, and it must never be saved under this
+    institution — a single copy of that contract was attributed to twenty-five universities across
+    this cohort. This repository has never held it and must not acquire it.
+  humanURL: https://waikato.figshare.com/
+  baseURL: https://waikato.figshare.com/
+  tags:
+  - Research Data
+  - Repository
+  - Figshare
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://docs.figshare.com/
+- aid: university-of-waikato:libguides
+  name: Waikato Library Guides on Springshare LibGuides (tenant)
+  x-operator: tenant
+  description: >-
+    libraryguides.waikato.ac.nz, which hosts the library's subject guides including its "Using
+    Generative AI in Academic Study" guide, CNAMEs to region-au.libguides.com — a tenancy on
+    Springshare's LibGuides platform. Verified live 2026-09-01, HTTP 200. The guides and the
+    editorial work are the institution's; the platform, its APIs and its contract are Springshare's.
+    Found by DNS resolution during this run; invisible to a host-based verdict because the hostname
+    sits under waikato.ac.nz.
+  humanURL: https://libraryguides.waikato.ac.nz/genaiguide
+  baseURL: https://libraryguides.waikato.ac.nz/
+  tags:
+  - Library
+  - LibGuides
+  - Springshare
+  - Tenant
+  - AI Policy
+  properties:
+  - type: Documentation
+    url: https://libraryguides.waikato.ac.nz/genaiguide
 common:
-  - type: IssueTracker
-    url: https://github.com/Waikato/waikato-repositories/issues
-  - type: DomainSecurity
-    url: security/university-of-waikato-domain-security.yml
   - type: Website
     url: https://www.waikato.ac.nz/
+  - type: GitHubOrganization
+    url: https://github.com/Waikato
   - type: GitHub
     url: https://github.com/Waikato
+  - type: SourceCode
+    url: https://github.com/Waikato/waikato-repositories
+  - type: IssueTracker
+    url: https://github.com/Waikato/waikato-repositories/issues
   - type: LinkedIn
     url: https://www.linkedin.com/school/universityofwaikato/
   - type: Twitter
     url: https://twitter.com/waikato
-  - type: SourceCode
-    url: https://github.com/Waikato/waikato-repositories
+  - type: Support
+    url: https://www.waikato.ac.nz/students/it-services/
+  - type: Blog
+    url: https://www.waikato.ac.nz/news-events/news/
+  - type: PrivacyPolicy
+    url: https://www.waikato.ac.nz/privacy/
+  - type: TermsOfService
+    url: https://www.waikato.ac.nz/copyright-and-disclaimer/
+  - type: CourseCatalog
+    url: https://timetable.waikato.ac.nz/
+  - type: LibraryCatalog
+    url: https://waikato.primo.exlibrisgroup.com/discovery/search?vid=64WAIKATO_INST:64WAIKATO
+  - type: ResearchRepository
+    url: https://researchcommons.waikato.ac.nz/
+  - type: IdentityFederation
+    url: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+  - type: AIPolicy
+    url: https://www.waikato.ac.nz/students/student-assessment-handbook/gen-ai/
+  - type: AITooling
+    url: https://libraryguides.waikato.ac.nz/genaiguide
+  - type: LLMsTxt
+    url: https://www.waikato.ac.nz/llms.txt
+  - type: x-conformance
+    url: conformance/university-of-waikato-conformance.yml
+  - type: Authentication
+    url: authentication/university-of-waikato-authentication.yml
+  - type: Scopes
+    url: scopes/university-of-waikato-scopes.yml
+  - type: Errors
+    url: errors/university-of-waikato-errors.yml
+  - type: Vocabulary
+    url: vocabulary/university-of-waikato-vocabulary.yml
+  - type: DomainSecurity
+    url: security/university-of-waikato-domain-security.yml
   - type: Plans
     url: plans/university-of-waikato-plans-pricing.yml
   - type: RateLimits
@@ -158,6 +481,99 @@ common:
     url: finops/university-of-waikato-finops.yml
   - type: Review
     url: review.yml
+x-coverage:
+  state: covered
+  reason: covered
+  generated: '2026-09-01'
+  method: probed
+  detail: >-
+    The University of Waikato operates no public developer programme, no developer portal and no
+    self-serve public API, and this profile says so. What it does operate was hunted across the
+    eight classes a university genuinely runs and found in five of them. Institution-operated and
+    readable: an OpenID Connect provider with a live discovery document and JWKS on the
+    university's own API gateway; a DSpace 7.6.5 REST API and OAI-PMH 2.0 interface on
+    researchcommons.waikato.ac.nz; a Moodle LTI 1.3 platform serving live platform keys; a
+    documented One-Time Secret API from IT Services; the UFDL deep-learning API from the CMS
+    faculty; four active GitHub organisations; a Shibboleth SP metadata endpoint on the repository
+    host; and an llms.txt with explicit attribution and generative-model terms. Institution
+    identity is federated twice — a Tuakiri/eduGAIN Shibboleth IdP entity (hosted on REANNZ's
+    Tuakiri Hosted IdP) and a Microsoft Entra ID tenant. Registry memberships verified: Crossref
+    member 6347 / prefix 10.15663 and ROR 013fsnh78; DataCite returns zero matches and is recorded
+    as a negative probe. Four surfaces are tenancies on other people's platforms and are recorded
+    as relationships, never as Waikato contracts — Symplectic Discovery behind
+    profiles.waikato.ac.nz, Ex Libris Primo VE, Springshare LibGuides behind
+    libraryguides.waikato.ac.nz, and waikato.figshare.com. Two of those (Symplectic, LibGuides)
+    were invisible to the host-based audit because they sit on waikato.ac.nz subdomains and were
+    found by DNS resolution in this run. Absences confirmed by probe: no data./opendata./api./
+    developer./apis.waikato.ac.nz (NXDOMAIN), no /.well-known/security.txt (404), no status page,
+    no research-computing or HPC allocation surface, no course/timetable API behind the ITS-built
+    Blazor client (every guessed gateway route returns the gateway's own 404 envelope), no ORCID
+    endpoints on the DSpace deployment. This profile is thin in artifact volume because the
+    institution genuinely publishes one contract of its own, not because we were blocked — the
+    single API-gateway path that is publicly routed is the one that is documented here.
+  evidence:
+  - url: https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration
+    status: 200
+  - url: https://api.svc.waikato.ac.nz/uowidp/v1/oidc/keys
+    status: 200
+  - url: https://api.svc.waikato.ac.nz/uowidp/v1/logout
+    status: 302
+  - url: https://api.svc.waikato.ac.nz/uowidp/v1/auth
+    status: 401
+  - url: https://api.svc.waikato.ac.nz/
+    status: 404
+  - url: https://researchcommons.waikato.ac.nz/server/api
+    status: 200
+  - url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+    status: 200
+  - url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=ListMetadataFormats
+    status: 200
+  - url: https://researchcommons.waikato.ac.nz/Shibboleth.sso/Metadata
+    status: 200
+  - url: https://elearn.waikato.ac.nz/mod/lti/certs.php
+    status: 200
+  - url: https://elearn.waikato.ac.nz/mod/lti/token.php
+    status: 400
+  - url: https://elearn.waikato.ac.nz/webservice/rest/server.php
+    status: 200
+  - url: https://otis.its.waikato.ac.nz/docs/api
+    status: 200
+  - url: https://ufdl.cms.waikato.ac.nz/ufdl-api/
+    status: 200
+  - url: https://timetable.waikato.ac.nz/appsettings.json
+    status: 200
+  - url: https://www.waikato.ac.nz/llms.txt
+    status: 200
+  - url: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+    status: 200
+  - url: https://mds.edugain.org/edugain-v2.xml
+    status: 200
+  - url: https://login.microsoftonline.com/220f5dc3-9452-48e5-9b4f-888df42f7a2d/federationmetadata/2007-06/federationmetadata.xml
+    status: 200
+  - url: https://api.crossref.org/members?query=waikato
+    status: 200
+  - url: https://api.ror.org/v2/organizations?query=University+of+Waikato
+    status: 200
+  - url: https://api.datacite.org/repositories?query=Waikato
+    status: 200
+  - url: https://profiles.waikato.ac.nz/
+    status: 200
+  - url: https://waikato.primo.exlibrisgroup.com/
+    status: 200
+  - url: https://libraryguides.waikato.ac.nz/genaiguide
+    status: 200
+  - url: https://waikato.figshare.com/
+    status: 202
+  - url: https://www.waikato.ac.nz/.well-known/security.txt
+    status: 404
+  - url: https://api.svc.waikato.ac.nz/swagger
+    status: 404
+  - url: https://data.waikato.ac.nz/
+    status: 0
+  - url: https://developer.waikato.ac.nz/
+    status: 0
+  - url: https://api.waikato.ac.nz/
+    status: 0
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
