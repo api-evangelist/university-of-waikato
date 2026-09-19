@@ -234,6 +234,12 @@ apis:
   - Identity Federation
   - SAML
   - Shibboleth
+  - SSO
+  - Metadata
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - Shibboleth
   - Single Sign-On
   - Metadata
   properties:
@@ -255,6 +261,12 @@ apis:
   humanURL: https://www.waikato.ac.nz/students/it-services/
   baseURL: https://login.microsoftonline.com/220f5dc3-9452-48e5-9b4f-888df42f7a2d/v2.0
   tags:
+  - Identity Federation
+  - SAML
+  - OpenID Connect
+  - Entra ID
+  - SSO
+  tags_raw:
   - Identity Federation
   - SAML
   - OpenID Connect
@@ -325,6 +337,11 @@ apis:
   - Research Information
   - Researcher Profiles
   - Symplectic
+  - Tenants
+  tags_raw:
+  - Research Information
+  - Researcher Profiles
+  - Symplectic
   - Tenant
   properties:
   - type: Documentation
@@ -342,6 +359,12 @@ apis:
   humanURL: https://waikato.primo.exlibrisgroup.com/discovery/search?vid=64WAIKATO_INST:64WAIKATO
   baseURL: https://waikato.primo.exlibrisgroup.com/
   tags:
+  - Library
+  - Discovery
+  - Ex Libris
+  - Primo
+  - Tenants
+  tags_raw:
   - Library
   - Discovery
   - Ex Libris
@@ -367,6 +390,11 @@ apis:
   - Research Data
   - Repository
   - Figshare
+  - Tenants
+  tags_raw:
+  - Research Data
+  - Repository
+  - Figshare
   - Tenant
   properties:
   - type: Documentation
@@ -383,6 +411,12 @@ apis:
   humanURL: https://libraryguides.waikato.ac.nz/genaiguide
   baseURL: https://libraryguides.waikato.ac.nz/
   tags:
+  - Library
+  - LibGuides
+  - Springshare
+  - Tenants
+  - AI Policy
+  tags_raw:
   - Library
   - LibGuides
   - Springshare
@@ -441,6 +475,8 @@ apis:
   humanURL: https://www.waikato.ac.nz/students/it-services/
   baseURL: https://api.svc.waikato.ac.nz/uowidp/v1
   tags:
+  - Sessions
+  tags_raw:
   - Session
   properties:
   - type: OpenAPI
