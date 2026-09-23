@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.svc.waikato.ac.nz/uowidp/v1/schemas/openid-provider-metadata",
+  "title": "University of Waikato uowidp OpenID Provider Metadata",
+  "description": "Schema for the discovery document published by the University of Waikato identity provider at https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration. Constrained to the values this provider actually advertises, not to the full OpenID Connect Discovery 1.0 vocabulary. Derived by API Evangelist from the live response captured 2026-09-01; the institution publishes no schema of its own.",
+  "x-provenance": {
+    "generated": "2026-09-01",
+    "method": "derived",
+    "source": "https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration",
+    "operator": "institution"
+  },
+  "type": "object",
+  "required": ["issuer", "authorization_endpoint", "token_endpoint", "jwks_uri"],
+  "additionalProperties": true,
+  "properties": {
+    "issuer": {
+      "type": "string",
+      "format": "uri",
+      "const": "https://api.svc.waikato.ac.nz/uowidp/v1"
+    },
+    "authorization_endpoint": {"type": "string", "format": "uri"},
+    "token_endpoint": {"type": "string", "format": "uri"},
+    "end_session_endpoint": {"type": "string", "format": "uri"},
+    "jwks_uri": {"type": "string", "format": "uri"},
+    "userinfo_endpoint": {
+      "type": "string",
+      "format": "uri",
+      "description": "Advertised as https://graph.microsoft.com/v1.0/me. Userinfo is served by the university's Microsoft Entra ID tenant, not by a waikato.ac.nz host."
+    },
+    "scopes_supported": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["openid", "profile", "email"]}
+    },
+    "response_types_supported": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["code", "id_token", "code id_token"]}
+    },
+    "response_modes_supported": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["query", "fragment", "form_post"]}
+    },
+    "id_token_signing_alg_values_supported": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["RS256"]}
+    },
+    "token_endpoint_auth_methods_supported": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["client_secret_post"]}
+    },
+    "claims_supported": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["iss", "aud", "nbf", "exp", "iat", "nonce", "Username", "name", "ver", "oid", "sub"]
+      }
+    },
+    "request_uri_parameter_supported": {"type": "boolean", "const": false},
+    "http_logout_supported": {"type": "boolean", "const": false},
+    "frontchannel_logout_supported": {"type": "boolean", "const": true}
+  }
+}

@@ -1,0 +1,72 @@
+generated: '2026-09-01'
+method: derived
+source: >-
+  https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration,
+  https://researchcommons.waikato.ac.nz/server/api,
+  https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify,
+  https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml,
+  https://www.waikato.ac.nz/llms.txt
+description: >-
+  The terms a caller needs to read the University of Waikato's programmable estate. Local
+  institutional vocabulary is mixed with standard protocol vocabulary here on purpose — the local
+  terms (Stella, paper, uowidp, Research Commons) are what make the estate legible, and they appear
+  nowhere in the protocols themselves.
+terms:
+- term: paper
+  local: true
+  definition: >-
+    The University of Waikato's word for a course/unit of study. "Papers" is what the study
+    catalogue and the timetable enumerate; a New Zealand convention, not a synonym for a
+    publication in this context.
+  source: https://www.waikato.ac.nz/study/papers/
+- term: Stella
+  local: true
+  definition: >-
+    The institutional account credential named in the One-Time Secret API documentation as the
+    username for HTTP Basic authentication; the API token is issued against it.
+  source: https://otis.its.waikato.ac.nz/docs/api
+- term: uowidp
+  local: true
+  definition: >-
+    University of Waikato Identity Provider — the path segment and de facto name of the
+    institution's own OpenID Connect provider on api.svc.waikato.ac.nz.
+  source: https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration
+- term: Research Commons
+  local: true
+  definition: >-
+    The repositoryName the institution's DSpace 7.6.5 open-access institutional repository declares
+    in its OAI-PMH Identify response; repositoryIdentifier researchcommons.waikato.ac.nz.
+  source: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+- term: eLearn
+  local: true
+  definition: The institution's name for its Moodle learning management system at elearn.waikato.ac.nz.
+  source: https://elearn.waikato.ac.nz/
+- term: MyWaikato
+  local: true
+  definition: >-
+    The student-facing portal at my.waikato.ac.nz, a Tribal SITS:Vision deployment authenticating
+    against uowidp with client_id SITS-Prod.
+  source: https://my.waikato.ac.nz/
+- term: Tuakiri
+  local: false
+  definition: >-
+    The New Zealand Access Federation, operated by REANNZ. The university's SAML 2.0 IdP entity is
+    registered in its signed metadata aggregate and exported to eduGAIN.
+  source: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+- term: Handle prefix 10289
+  local: true
+  definition: >-
+    The Handle System namespace Research Commons mints persistent identifiers in — sample identifier
+    oai:researchcommons.waikato.ac.nz:10289/1234.
+  source: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+- term: DOI prefix 10.15663
+  local: true
+  definition: The University of Waikato's Crossref DOI prefix, held under Crossref member id 6347.
+  source: https://api.crossref.org/members?query=waikato
+- term: shibmd:Scope waikato.ac.nz
+  local: false
+  definition: >-
+    The scoped-affiliation namespace the institution's IdP is authoritative for in Tuakiri and
+    eduGAIN — the assertion that eduPersonScopedAffiliation values ending @waikato.ac.nz come from
+    this entity.
+  source: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml

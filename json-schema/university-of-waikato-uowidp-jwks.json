@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.svc.waikato.ac.nz/uowidp/v1/schemas/jwks",
+  "title": "University of Waikato uowidp JSON Web Key Set",
+  "description": "Schema for the signing keys published at https://api.svc.waikato.ac.nz/uowidp/v1/oidc/keys, used to verify id_tokens issued by the University of Waikato identity provider. Derived by API Evangelist from the live response captured 2026-09-01, which carried one RSA signing key.",
+  "x-provenance": {
+    "generated": "2026-09-01",
+    "method": "derived",
+    "source": "https://api.svc.waikato.ac.nz/uowidp/v1/oidc/keys",
+    "operator": "institution"
+  },
+  "type": "object",
+  "required": ["keys"],
+  "properties": {
+    "keys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kty", "use", "kid", "e", "n"],
+        "properties": {
+          "kty": {"type": "string", "const": "RSA"},
+          "use": {"type": "string", "const": "sig"},
+          "kid": {"type": "string", "description": "Key identifier matched against the id_token header kid."},
+          "e": {"type": "string", "description": "Base64url RSA public exponent."},
+          "n": {"type": "string", "description": "Base64url RSA modulus."},
+          "alg": {"type": "string", "enum": ["RS256"]}
+        }
+      }
+    }
+  }
+}

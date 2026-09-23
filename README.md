@@ -64,7 +64,9 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Waikato (Te Whare Wananga o Waikato) is a public research university in Hamilton, New Zealand, founded in 1964 and ranked #235 in the QS World University Rankings 2025. This repository catalogs the institution's publicly observable developer and API footprint as an [APIs.json](https://apisjson.org) profile. There is no single consolidated developer portal; the footprint is spread across the Research Commons institutional repository, IT Services operational APIs, and research-software APIs from the Computing and Mathematical Sciences faculty.
+The University of Waikato (Te Whare Wananga o Waikato) is a public research university in Hamilton and Tauranga, Aotearoa New Zealand, founded in 1964. This repository catalogs the institution's publicly observable developer and API footprint as an [APIs.json](https://apisjson.org) profile.
+
+A university is a federation of buyers, not a producer, so this profile records **who operates** each surface as well as what it is. Every entry in `apis.yml` carries an `x-operator` — `institution` (the university's own host and deployment), `federation` (its identity in a shared federation), `registry` (a membership in a shared identifier registry), or `tenant` (its account on somebody else's platform). Vendor contracts are never saved under this institution; the relationship is recorded instead.
 
 - APIs.json: https://raw.githubusercontent.com/api-evangelist/university-of-waikato/refs/heads/main/apis.yml
 - Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=university-of-waikato-api-evangelist&utm_content=repo
@@ -73,48 +75,69 @@ The University of Waikato (Te Whare Wananga o Waikato) is a public research univ
 
 - Index
 - Consumer
-- 3rd-Party
+- Internal
+- University · Public Research University
 
 ## Tags
 
-Education, Higher Education, University, Research, Institutional Repository, Open Access, New Zealand
+Education, Higher Education, University, New Zealand, Research, Research Repository, Open Access, OAI-PMH, Identity Federation, SAML, OpenID Connect, Learning Management, Machine Learning
 
-## APIs
+## Institution-operated surfaces
 
-- **Research Commons REST API** — DSpace 7.6.5 REST API over the open access institutional repository. [Docs](https://researchcommons.waikato.ac.nz/server/api)
-- **Research Commons OAI-PMH** — OAI-PMH 2.0 metadata harvesting endpoint (repositoryName "Research Commons"). [Docs](https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify)
-- **One-Time Secret (OTS) API** — IT Services API for securely sharing one-time secrets; JSON over HTTPS, HTTP Basic auth. [Docs](https://otis.its.waikato.ac.nz/docs/api)
-- **User-friendly Deep Learning (UFDL) API** — JSON REST API for the CMS faculty's deep learning framework. [Docs](https://ufdl.cms.waikato.ac.nz/ufdl-api/)
-- **Identity Provider (uowidp)** — Campus SSO / identity sign-in endpoint (account-gated). [Docs](https://api.svc.waikato.ac.nz/uowidp/v1/login)
+- **University of Waikato Identity Provider (uowidp)** — the institution's own OpenID Connect provider on its API gateway, publishing a live discovery document and JWKS. The one machine-readable contract in this repository. [Discovery](https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration) · [OpenAPI](openapi/university-of-waikato-uowidp-openapi.yml)
+- **Research Commons OAI-PMH** — OAI-PMH 2.0 harvesting on the university's DSpace 7.6.5 repository; twelve metadata formats, earliest datestamp 1972. [Identify](https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify)
+- **Research Commons DSpace REST API** — DSpace 7.6.5 REST over communities, collections, items and discovery. The contract is DSpace's; the deployment and content are the university's. [Root](https://researchcommons.waikato.ac.nz/server/api)
+- **eLearn LTI 1.3 Platform (Moodle)** — the university's LMS acts as an LTI 1.3 platform and serves live platform keys. [JWKS](https://elearn.waikato.ac.nz/mod/lti/certs.php)
+- **One-Time Secret (OTS) API** — IT Services API for one-time secret sharing; JSON over HTTPS, HTTP Basic against a Stella account. [Docs](https://otis.its.waikato.ac.nz/docs/api)
+- **User-friendly Deep Learning (UFDL) API** — the Computing and Mathematical Sciences faculty's deep-learning framework API. [Docs](https://ufdl.cms.waikato.ac.nz/ufdl-api/)
 
-## Plans
+## Identity federation
 
-[plans/university-of-waikato-plans-pricing.yml](plans/university-of-waikato-plans-pricing.yml)
+- **Waikato SAML 2.0 Identity Provider in Tuakiri** — entityID `https://idp.waikato.ac.nz/idp/shibboleth`, registered since 2012-10-15, REFEDS Research & Scholarship + Sirtfi, exported to eduGAIN. The entity is the university's; the deployment runs on REANNZ's Tuakiri Hosted IdP. [Metadata](https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml)
+- **Microsoft Entra ID tenant** `220f5dc3-9452-48e5-9b4f-888df42f7a2d` — the identity source behind uowidp and the live SAML issuer for eLearn.
 
-## Rate Limits
+## Registry memberships
 
-[rate-limits/university-of-waikato-rate-limits.yml](rate-limits/university-of-waikato-rate-limits.yml)
+- **Crossref** — member 6347, DOI prefix `10.15663`.
+- **ROR** — [ror.org/013fsnh78](https://ror.org/013fsnh78).
+- **DataCite** — no provider or repository record; recorded as a negative probe.
 
-## FinOps
+## Tenancies (recorded as relationships, not as Waikato contracts)
 
-[finops/university-of-waikato-finops.yml](finops/university-of-waikato-finops.yml)
+- **Symplectic Discovery** — `profiles.waikato.ac.nz` CNAMEs to `waikato.discovery.symplectic.org`.
+- **Ex Libris Primo VE** — named view `64WAIKATO_INST:64WAIKATO`.
+- **Springshare LibGuides** — `libraryguides.waikato.ac.nz` CNAMEs to `region-au.libguides.com`.
+- **Figshare** — `waikato.figshare.com`, live behind a bot challenge.
+
+## Artifacts
+
+- [openapi/university-of-waikato-uowidp-openapi.yml](openapi/university-of-waikato-uowidp-openapi.yml) (+ [`_original/`](openapi/_original/))
+- [conformance/university-of-waikato-conformance.yml](conformance/university-of-waikato-conformance.yml)
+- [authentication/university-of-waikato-authentication.yml](authentication/university-of-waikato-authentication.yml)
+- [scopes/university-of-waikato-scopes.yml](scopes/university-of-waikato-scopes.yml)
+- [errors/university-of-waikato-errors.yml](errors/university-of-waikato-errors.yml)
+- [vocabulary/university-of-waikato-vocabulary.yml](vocabulary/university-of-waikato-vocabulary.yml)
+- [json-schema/](json-schema/) · [examples/](examples/) · [json-ld/](json-ld/)
+- [plans/university-of-waikato-plans-pricing.yml](plans/university-of-waikato-plans-pricing.yml) · [rate-limits/university-of-waikato-rate-limits.yml](rate-limits/university-of-waikato-rate-limits.yml) · [finops/university-of-waikato-finops.yml](finops/university-of-waikato-finops.yml) · [security/university-of-waikato-domain-security.yml](security/university-of-waikato-domain-security.yml)
 
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
+- Modified: 2026-09-01
 
 ## Common Properties
 
 - Website: https://www.waikato.ac.nz/
-- GitHub: https://github.com/Waikato
+- GitHub: https://github.com/Waikato (also `waikato-ufdl`, `waikato-datamining`, `waikato-llm`)
 - LinkedIn: https://www.linkedin.com/school/universityofwaikato/
 - Twitter: https://twitter.com/waikato
 - Source Code: https://github.com/Waikato/waikato-repositories
+- llms.txt: https://www.waikato.ac.nz/llms.txt
+- AI policy: https://www.waikato.ac.nz/students/student-assessment-handbook/gen-ai/
 
 ## Notes
 
-All APIs and URLs were probed live on 2026-06-03 and statuses recorded in `review.yml`. The Research Commons REST and OAI-PMH endpoints, OTS API docs, UFDL docs, and the uowidp identity endpoint all resolved (HTTP 200). The OTS and identity APIs are gated to institutional accounts. The LinkedIn page returns HTTP 999 (LinkedIn bot-block) but exists. No endpoints were fabricated; only confirmed, publicly observable resources are cataloged.
+Every URL in this profile was probed live on 2026-09-01 and the statuses are recorded in `review.yml` and in `x-coverage` in `apis.yml`. Confirmed absences: no `data.`, `opendata.`, `api.`, `developer.` or `apis.waikato.ac.nz` (NXDOMAIN), no `/.well-known/security.txt` (404), no status page, no research-computing allocation surface, no ORCID endpoints on the DSpace deployment, and no public route on the API gateway other than `/uowidp/v1`. The LinkedIn page returns HTTP 999 (LinkedIn bot-block) but exists. Nothing here is fabricated, and no vendor's contract is attributed to this institution.
 
 ## Maintainers
 

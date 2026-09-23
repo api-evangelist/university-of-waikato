@@ -1,0 +1,193 @@
+specification: API Evangelist Conformance
+specificationVersion: '0.1'
+provider: University of Waikato
+providerId: university-of-waikato
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live HTTP probes of hosts under waikato.ac.nz, plus the institution's own entries in the signed
+  Tuakiri (New Zealand Access Federation) metadata aggregate, the eduGAIN v2 metadata aggregate,
+  and the Crossref and ROR public registries.
+regime: education
+description: >-
+  Domain-standard conformance for the University of Waikato, measured against the Kin Score
+  `education` regime standards[] list. Every entry is evidenced by a live response from a host on
+  the institution's own registrable domain, or by the institution's own entry in a signed
+  third-party aggregate or public registry. Standards with no evidence are recorded as not_found
+  rather than assumed. Reward-only: nothing here is inferred from a prose claim.
+conformance:
+- standard: oai-pmh
+  status: conformant
+  confidence: high
+  operator: institution
+  detail: >-
+    Research Commons, the University of Waikato's DSpace 7.6.5 institutional repository, serves a
+    live OAI-PMH 2.0 interface on the institution's own host. verb=Identify returns protocolVersion
+    2.0, repositoryName "Research Commons", repositoryIdentifier researchcommons.waikato.ac.nz,
+    sampleIdentifier oai:researchcommons.waikato.ac.nz:10289/1234 (Handle prefix 10289),
+    deletedRecord "transient", granularity YYYY-MM-DDThh:mm:ssZ and earliestDatestamp
+    1972-12-31. verb=ListMetadataFormats advertises twelve metadata prefixes. Note the adminEmail
+    is data@prosentient.com.au — the deployment is managed for the institution by Prosentient
+    Systems; the host, the identifier namespace and the content are the institution's.
+  evidence:
+  - url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=Identify
+    status: 200
+    note: 'valid Identify; baseURL https://researchcommons.waikato.ac.nz/server/oai/request; earliestDatestamp 1972-12-31T12:00:00Z'
+  - url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=ListMetadataFormats
+    status: 200
+    note: 'metadataPrefix: didl, dim, etdms, marc, mets, mods, oai_dc, ore, qdc, rdf, uketd_dc, xoai'
+  - url: https://researchcommons.waikato.ac.nz/server/oai/request?verb=ListSets
+    status: 200
+    note: set hierarchy enumerates (9276 bytes)
+- standard: saml
+  status: conformant
+  confidence: high
+  operator: mixed
+  detail: >-
+    Two distinct SAML 2.0 surfaces carry the University of Waikato's identity. (1) The institution's
+    Identity Provider entityID https://idp.waikato.ac.nz/idp/shibboleth is present in the signed
+    Tuakiri metadata aggregate with mdui:DisplayName "The University of Waikato" and
+    shibmd:Scope waikato.ac.nz. (2) The university's Microsoft Entra ID tenant
+    220f5dc3-9452-48e5-9b4f-888df42f7a2d publishes WS-Federation/SAML 2.0 metadata and is the live
+    SAML issuer for elearn.waikato.ac.nz — an unauthenticated request to the Moodle LMS redirects
+    to login.microsoftonline.com/220f5dc3-.../saml2 with a signed SAMLRequest (RSA-SHA256).
+  evidence:
+  - url: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+    status: 200
+    note: 'signed aggregate; contains md:EntityDescriptor entityID="https://idp.waikato.ac.nz/idp/shibboleth"'
+  - url: https://login.microsoftonline.com/220f5dc3-9452-48e5-9b4f-888df42f7a2d/federationmetadata/2007-06/federationmetadata.xml
+    status: 200
+    note: 28441 bytes of SAML 2.0 / WS-Federation metadata for the university Entra ID tenant
+  - url: https://elearn.waikato.ac.nz/
+    status: 200
+    note: redirects unauthenticated callers to the tenant SAML2 endpoint with a signed AuthnRequest
+  - url: https://researchcommons.waikato.ac.nz/Shibboleth.sso/Metadata
+    status: 200
+    note: >-
+      Shibboleth SP handler on the institution's own host publishes md:EntityDescriptor
+      entityID="https://researchcommons.waikato.ac.nz/shibboleth"; the response carries
+      Shibboleth's standard "example metadata only" banner, so it is auto-generated and this SP is
+      not registered in the Tuakiri aggregate
+- standard: shibboleth
+  status: conformant
+  confidence: high
+  operator: mixed
+  detail: >-
+    The University of Waikato is a member of Tuakiri, the New Zealand Access Federation operated by
+    REANNZ, registered on 2012-10-15 under registrationAuthority https://tuakiri.ac.nz/. Its IdP
+    entry carries the REFEDS Research & Scholarship entity category
+    (http://refeds.org/category/research-and-scholarship) and the REFEDS Sirtfi assurance
+    certification (https://refeds.org/sirtfi), and is exported to eduGAIN, so the entity is
+    internationally interoperable. The entity is the institution's; the deployment is not — every
+    SingleSignOnService and SingleLogoutService Location in the entry resolves to
+    hosted-login.tuakiri.ac.nz/hosting/waikato.ac.nz/idp/, and the signing certificate CN is
+    hosted-login.tuakiri.ac.nz/hosting/waikato.ac.nz. The university uses Tuakiri's Hosted IdP
+    service. A Shibboleth SP also runs on researchcommons.waikato.ac.nz (operator institution).
+  evidence:
+  - url: https://directory.tuakiri.ac.nz/metadata/tuakiri-metadata-signed.xml
+    status: 200
+    note: >-
+      one waikato.ac.nz entityID in the aggregate — IDPSSODescriptor, REFEDS R&S + Sirtfi,
+      scope waikato.ac.nz, endpoints hosted at hosted-login.tuakiri.ac.nz
+  - url: https://mds.edugain.org/edugain-v2.xml
+    status: 200
+    note: 'eduGAIN v2 aggregate contains entityID="https://idp.waikato.ac.nz/idp/shibboleth"'
+- standard: lti
+  status: conformant
+  confidence: medium
+  operator: institution
+  detail: >-
+    eLearn (elearn.waikato.ac.nz), the University of Waikato's Moodle learning management system on
+    its own registrable domain, acts as an LTI 1.3 platform and serves a live JSON Web Key Set from
+    the institution's host — one RSA key, alg RS256, kid 9b45a1370943b0323a6b. The LTI 1.3
+    authorization endpoint (/mod/lti/auth.php) responds and the token endpoint (/mod/lti/token.php)
+    returns HTTP 400 to a parameterless GET, i.e. it is live and expects a proper client-credentials
+    POST. The LTI implementation is Moodle's; what is institution-operated is the deployment,
+    its keys and the tool registrations behind them.
+  evidence:
+  - url: https://elearn.waikato.ac.nz/mod/lti/certs.php
+    status: 200
+    note: 'JWKS, 1 RSA key, alg RS256, kid 9b45a1370943b0323a6b'
+  - url: https://elearn.waikato.ac.nz/mod/lti/auth.php
+    status: 200
+    note: LTI 1.3 platform authorization endpoint responds
+  - url: https://elearn.waikato.ac.nz/mod/lti/token.php
+    status: 400
+    note: live; rejects a parameterless GET
+- standard: crossref
+  status: conformant
+  confidence: high
+  operator: registry
+  detail: >-
+    The University of Waikato is a Crossref member — member id 6347, primary name "University of
+    Waikato", DOI prefix 10.15663. This is a membership the institution holds in a shared
+    identifier registry, and is recorded as a fact about the institution. Crossref's API is
+    Crossref's; no contract is claimed here.
+  evidence:
+  - url: https://api.crossref.org/members?query=waikato
+    status: 200
+    note: 'id 6347, prefixes ["10.15663"]'
+- standard: datacite
+  status: not_found
+  confidence: high
+  operator: registry
+  detail: >-
+    No DataCite provider or repository record matches "Waikato". Queried 2026-09-01: both
+    /providers?query=Waikato and /repositories?query=Waikato return meta.total 0. The institution
+    mints Handles (prefix 10289) through Research Commons and DOIs through Crossref, not DataCite.
+    Recorded as a negative probe so a later run does not re-derive it.
+  evidence:
+  - url: https://api.datacite.org/providers?query=Waikato
+    status: 200
+    note: meta.total 0
+  - url: https://api.datacite.org/repositories?query=Waikato
+    status: 200
+    note: meta.total 0
+- standard: orcid
+  status: not_found
+  confidence: medium
+  operator: institution
+  detail: >-
+    No ORCID integration is exposed. The Research Commons DSpace 7.6.5 REST root advertises 65
+    HAL links and none of them are DSpace's ORCID endpoints (orcidqueues, orcidhistories); the
+    string "orcid" does not appear in the API root document. Absence of an exposed endpoint is not
+    proof the institution has no ORCID relationship, only that none is machine-readable here.
+  evidence:
+  - url: https://researchcommons.waikato.ac.nz/server/api
+    status: 200
+    note: 65 _links, no orcid endpoints
+- standard: scim
+  status: not_found
+  confidence: low
+  operator: institution
+  detail: >-
+    No SCIM endpoint found on any institution host. The university's user store is its Microsoft
+    Entra ID tenant, which supports SCIM provisioning, but no institution-published SCIM surface
+    is discoverable from outside.
+  evidence: []
+- standard: oneroster
+  status: not_found
+  confidence: low
+  operator: institution
+  detail: 1EdTech OneRoster is a K-12 rostering standard; no endpoint or claim found.
+  evidence: []
+- standard: ed-fi
+  status: not_found
+  confidence: low
+  operator: institution
+  detail: Ed-Fi is a US K-12 data standard; not applicable to a New Zealand university and not found.
+  evidence: []
+- standard: caliper
+  status: not_found
+  confidence: low
+  operator: institution
+  detail: >-
+    No 1EdTech Caliper Analytics endpoint exposed by the Moodle deployment or any other
+    institution host.
+  evidence: []
+- standard: qti
+  status: not_found
+  confidence: low
+  operator: institution
+  detail: No QTI assessment interoperability surface found.
+  evidence: []

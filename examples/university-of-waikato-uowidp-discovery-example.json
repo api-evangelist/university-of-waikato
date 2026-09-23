@@ -1,0 +1,87 @@
+{
+  "_provenance": {
+    "generated": "2026-09-01",
+    "method": "probed",
+    "source": "live GET https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration",
+    "note": "Verbatim response bodies captured from the University of Waikato identity provider. Nothing edited except key material truncation is NOT applied \u2014 these are public verification keys."
+  },
+  "discovery": {
+    "request": {
+      "method": "GET",
+      "url": "https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration"
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "token_endpoint": "https://api.svc.waikato.ac.nz/uowidp/v1/token",
+        "token_endpoint_auth_methods_supported": [
+          "client_secret_post"
+        ],
+        "jwks_uri": "https://api.svc.waikato.ac.nz/uowidp/v1/oidc/keys",
+        "response_modes_supported": [
+          "query",
+          "fragment",
+          "form_post"
+        ],
+        "id_token_signing_alg_values_supported": [
+          "RS256"
+        ],
+        "response_types_supported": [
+          "code",
+          "id_token",
+          "code id_token"
+        ],
+        "scopes_supported": [
+          "openid",
+          "profile",
+          "email"
+        ],
+        "issuer": "https://api.svc.waikato.ac.nz/uowidp/v1",
+        "authorization_endpoint": "https://api.svc.waikato.ac.nz/uowidp/v1/auth",
+        "request_uri_parameter_supported": false,
+        "http_logout_supported": false,
+        "frontchannel_logout_supported": true,
+        "end_session_endpoint": "https://api.svc.waikato.ac.nz/uowidp/v1/logout",
+        "claims_supported": [
+          "iss",
+          "aud",
+          "nbf",
+          "exp",
+          "iat",
+          "nonce",
+          "Username",
+          "name",
+          "ver",
+          "oid",
+          "sub"
+        ],
+        "userinfo_endpoint": "https://graph.microsoft.com/v1.0/me"
+      }
+    }
+  },
+  "jwks": {
+    "request": {
+      "method": "GET",
+      "url": "https://api.svc.waikato.ac.nz/uowidp/v1/oidc/keys"
+    },
+    "response": {
+      "status": 200,
+      "body": {
+        "keys": [
+          {
+            "kty": "RSA",
+            "use": "sig",
+            "kid": "myFFFL1T1pdTXf8L8ZjDAdGQQyI",
+            "e": "AQAB",
+            "n": "l4DlFfyIdlJcDanKjHK9arNO4BLwiVXnxe99OmqcrLgd7A-gFirG-S-1-kJuAOJhGR1qDyMIJZbwTtYtBc9AtHraIqgzMA0FEsu2IlpuMAacB6Ky4716dhPhFmf8Xj45qJXIbrdrHPYMLAW9lnRe8BpxScvSWsk81R7JQzdqKeuAYzqrn4me-AjPxO7hKbK_Lf1FM-rmKIzHpvitKxHAELgV4FXrpAIPK8o8gL33OElVTuAqrd0QHyY4DpAks9EycvEgsyulCV-EUjaPFnilW_RdspI7TPzZJ5Kiqwgv_zaLUUvy2LN7HuP5kzdssc2ZFU6VZf-6ckeoASu5xbCoYigU4fdy3z1TzqUcyox152l-VM8SgH1Rs97fQsRVOzNajH8eEeHJs1BX1nfi0U_BP1-tQMK9S9VhM_eMnH-Th4arAFx5jrOV9N3H7UYhZqFlODpXQv2HXQBkrjSk9wRRIXsU0CSMYvAPCIPGmYMzjJ_6kj47T56A-rnzABh3HSJZDaAY_kMzipkwHKGEa6AryVkgr8Z8Lde0YFjiDl3JrTCKUdKlDRgreJXSy5B1WWmlS_7_v0rS5rfyQ8Pw-QrLrYDj8WmiNx1J1m4VDJapz9eKdC6jInD3uuq_j7u_hjsExtQiVw8JTTzeBgEFqy_qQKhm7m5nHrRar4nHS6Suh_0",
+            "issuer": "https://api.svc.waikato.ac.nz/uowidp/v1",
+            "x5c": [
+              "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"
+            ],
+            "x5t": "myFFFL1T1pdTXf8L8ZjDAdGQQyI"
+          }
+        ]
+      }
+    }
+  }
+}

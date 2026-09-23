@@ -1,0 +1,69 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  live probes of https://api.svc.waikato.ac.nz/, https://elearn.waikato.ac.nz/webservice/rest/server.php,
+  https://researchcommons.waikato.ac.nz/server/api/config/properties
+description: >-
+  Error semantics observed on University of Waikato institution-operated surfaces. The university
+  publishes no error reference and no problem-details (RFC 9457) media type anywhere on the estate;
+  everything below was captured from live responses. Three different envelopes are in use because
+  three different systems are in play — the institution's own API gateway, Moodle, and DSpace.
+  Recorded so an integrator knows what to parse, not as a contract the institution has published.
+standards:
+  rfc9457_problem_details: false
+  consistent_envelope_across_estate: false
+envelopes:
+- surface: api.svc.waikato.ac.nz (institution API gateway)
+  operator: institution
+  media_type: application/json
+  shape:
+    statusCode: integer
+    message: string
+  example: '{ "statusCode": 404, "message": "Resource not found" }'
+  notes: >-
+    The gateway answers every unrouted path with this envelope. Only /uowidp/v1 is publicly routed;
+    /, /swagger, /timetable/v1 and every other probed path return this 404. A 404 from this gateway
+    means "no route for an unauthenticated caller", not "this service does not exist".
+  observed:
+  - url: https://api.svc.waikato.ac.nz/
+    status: 404
+  - url: https://api.svc.waikato.ac.nz/swagger
+    status: 404
+  - url: https://api.svc.waikato.ac.nz/uowidp/v1/token
+    status: 404
+    note: GET on a POST-only endpoint
+  - url: https://api.svc.waikato.ac.nz/uowidp/v1/auth
+    status: 401
+    note: HTML/JSON challenge for an unparameterised authorization request
+- surface: elearn.waikato.ac.nz (Moodle web services)
+  operator: institution
+  media_type: text/xml
+  shape:
+    EXCEPTION@class: string
+    ERRORCODE: string
+    MESSAGE: string
+  example: '<EXCEPTION class="core\exception\moodle_exception"><ERRORCODE>missingparam</ERRORCODE><MESSAGE>A required parameter (wstoken) was missing</MESSAGE></EXCEPTION>'
+  notes: >-
+    Moodle's standard web-service fault envelope, returned with HTTP 200 — the status line does not
+    carry the failure. Callers must parse the body. This envelope is Moodle's, not the
+    institution's engineering.
+  observed:
+  - url: https://elearn.waikato.ac.nz/webservice/rest/server.php
+    status: 200
+    note: HTTP 200 carrying an error body
+- surface: researchcommons.waikato.ac.nz (DSpace 7.6.5 REST)
+  operator: institution
+  media_type: application/json
+  notes: >-
+    DSpace returns conventional HTTP status codes with a Spring error body. /server/api/config/properties
+    returns 405 to a GET (the endpoint is POST-only), which is a correct method-level signal.
+  observed:
+  - url: https://researchcommons.waikato.ac.nz/server/api/config/properties
+    status: 405
+- surface: otis.its.waikato.ac.nz (One-Time Secret)
+  operator: institution
+  media_type: application/json
+  notes: >-
+    No error taxonomy is documented on the published API page. Every call requires HTTP Basic with a
+    Stella account, so error behaviour could not be observed without institutional credentials.
+  observed: []

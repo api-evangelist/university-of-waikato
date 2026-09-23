@@ -1,0 +1,315 @@
+# x-archived-from: university-of-waikato-uowidp-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.1.0
+info:
+  title: University of Waikato Identity Provider (uowidp)
+  version: v1
+  summary: OpenID Connect provider operated by the University of Waikato on its own API gateway.
+  description: >-
+    OpenID Connect 1.0 provider operated by the University of Waikato (Te Whare Wananga o Waikato)
+    at https://api.svc.waikato.ac.nz/uowidp/v1. Every path, parameter and supported value in this
+    document is transcribed from the institution's OWN published discovery document at
+    /uowidp/v1/.well-known/openid-configuration, fetched live 2026-09-01 (HTTP 200), and from its
+    live JWKS at /uowidp/v1/oidc/keys (HTTP 200). Nothing here is inferred from the OpenID Connect
+    specification beyond what that document declares.
+
+    This is a University of Waikato surface, not a vendor's: the issuer, the authorization,
+    token, logout and JWKS endpoints are all on the institution's own registrable domain, and the
+    provider is consumed by the institution's own applications — the ITS-built Blazor timetable
+    (client_id `timetable-prod`, declared in https://timetable.waikato.ac.nz/appsettings.json)
+    and the MyWaikato SITS:Vision student portal (client_id `SITS-Prod`, observed in the live
+    authorization redirect from https://my.waikato.ac.nz). The `userinfo_endpoint` the discovery
+    document advertises is https://graph.microsoft.com/v1.0/me and the claim set (`oid`, `ver`)
+    is Microsoft Entra ID's, so the provider fronts the university's Entra ID tenant
+    (220f5dc3-9452-48e5-9b4f-888df42f7a2d) rather than holding its own user store.
+
+    Client registration is not open. There is no self-serve developer programme, no published
+    client-registration endpoint and no documentation page; the endpoints below are discoverable
+    and callable, but obtaining a client_id requires an arrangement with University of Waikato
+    ITS. Recorded here because a published, machine-readable discovery document IS a contract,
+    and it is one of the few this institution operates itself.
+  contact:
+    name: University of Waikato ITS
+    url: https://www.waikato.ac.nz/students/it-services/
+    email: help@waikato.ac.nz
+  termsOfService: https://www.waikato.ac.nz/copyright-and-disclaimer/
+  license:
+    name: No licence published for this interface
+    identifier: NOASSERTION
+  x-operator: institution
+  x-provenance:
+    generated: '2026-09-01'
+    method: derived
+    source: https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration
+    note: >-
+      Derived by API Evangelist from the institution's own live OIDC discovery document and JWKS.
+      The University of Waikato does not publish an OpenAPI for this service; this document is not
+      theirs and must not be credited to them as a published specification.
+servers:
+- url: https://api.svc.waikato.ac.nz/uowidp/v1
+  description: Production issuer, declared as `issuer` in the discovery document.
+externalDocs:
+  description: Live OpenID Provider discovery document
+  url: https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration
+tags:
+- name: Discovery
+  description: OpenID Provider metadata and signing keys.
+- name: Authentication
+  description: Authorization Code and hybrid flows against the university identity provider.
+- name: Session
+  description: Front-channel session termination.
+paths:
+  /.well-known/openid-configuration:
+    get:
+      tags: [Discovery]
+      operationId: getOpenIdConfiguration
+      summary: OpenID Provider metadata
+      description: >-
+        Returns the OpenID Connect Discovery 1.0 metadata document for the University of Waikato
+        identity provider. Verified live 2026-09-01, HTTP 200, 868 bytes, application/json.
+      security: []
+      responses:
+        '200':
+          description: Provider metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenIdProviderMetadata'
+              examples:
+                live:
+                  summary: Response captured 2026-09-01
+                  externalValue: ../examples/university-of-waikato-uowidp-discovery-example.json
+  /oidc/keys:
+    get:
+      tags: [Discovery]
+      operationId: getJwks
+      summary: JSON Web Key Set
+      description: >-
+        Returns the RSA signing keys used to verify id_tokens issued by this provider. Declared as
+        `jwks_uri` in the discovery document. Verified live 2026-09-01, HTTP 200, 2871 bytes.
+      security: []
+      responses:
+        '200':
+          description: JSON Web Key Set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonWebKeySet'
+  /auth:
+    get:
+      tags: [Authentication]
+      operationId: authorize
+      summary: Authorization endpoint
+      description: >-
+        OpenID Connect authorization endpoint. Declared as `authorization_endpoint`. Called with a
+        registered `client_id`; observed live in production redirects from my.waikato.ac.nz
+        (client_id `SITS-Prod`) and configured for timetable.waikato.ac.nz (`timetable-prod`).
+        Probed without parameters on 2026-09-01 and returned HTTP 401 — the endpoint is live and
+        rejects unregistered/unparameterised callers.
+      security: []
+      parameters:
+      - name: response_type
+        in: query
+        required: true
+        description: One of the values in `response_types_supported`.
+        schema:
+          type: string
+          enum: [code, id_token, code id_token]
+      - name: client_id
+        in: query
+        required: true
+        description: Client identifier issued by University of Waikato ITS. Not self-serve.
+        schema: {type: string}
+      - name: redirect_uri
+        in: query
+        required: true
+        schema: {type: string, format: uri}
+      - name: scope
+        in: query
+        required: true
+        description: Space-delimited; values from `scopes_supported`.
+        schema:
+          type: string
+          examples: ['openid', 'openid profile email']
+      - name: state
+        in: query
+        required: false
+        schema: {type: string}
+      - name: nonce
+        in: query
+        required: false
+        schema: {type: string}
+      - name: response_mode
+        in: query
+        required: false
+        schema:
+          type: string
+          enum: [query, fragment, form_post]
+      responses:
+        '302':
+          description: Redirect to the university sign-in interface, or back to `redirect_uri` with a code.
+          headers:
+            Location:
+              schema: {type: string, format: uri}
+        '401':
+          description: Unauthenticated or unrecognised client.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+  /token:
+    post:
+      tags: [Authentication]
+      operationId: exchangeToken
+      summary: Token endpoint
+      description: >-
+        Exchanges an authorization code for an id_token. Declared as `token_endpoint`.
+        `token_endpoint_auth_methods_supported` is `["client_secret_post"]`, so client credentials
+        are sent in the form body, not the Authorization header. id_tokens are signed RS256.
+        A GET probe on 2026-09-01 returned HTTP 404 from the gateway — the endpoint accepts POST only.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '200':
+          description: Token response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Invalid grant or malformed request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatewayError'
+  /logout:
+    get:
+      tags: [Session]
+      operationId: endSession
+      summary: End-session endpoint
+      description: >-
+        Front-channel logout. Declared as `end_session_endpoint`;
+        `frontchannel_logout_supported` is true and `http_logout_supported` is false. Verified
+        live 2026-09-01, HTTP 302.
+      security: []
+      parameters:
+      - name: post_logout_redirect_uri
+        in: query
+        required: false
+        schema: {type: string, format: uri}
+      - name: id_token_hint
+        in: query
+        required: false
+        schema: {type: string}
+      responses:
+        '302':
+          description: Redirect after session termination.
+  /login:
+    get:
+      tags: [Authentication]
+      operationId: getLoginInterface
+      summary: Sign-in interface
+      description: >-
+        Serves the University of Waikato sign-in interface. Verified live 2026-09-01, HTTP 200;
+        reached in production as the target of an authorization request from my.waikato.ac.nz.
+        Not declared in the discovery document — recorded from live observation.
+      security: []
+      responses:
+        '200':
+          description: HTML sign-in page.
+          content:
+            text/html: {}
+components:
+  securitySchemes:
+    uowidp:
+      type: openIdConnect
+      openIdConnectUrl: https://api.svc.waikato.ac.nz/uowidp/v1/.well-known/openid-configuration
+      description: >-
+        OpenID Connect against the University of Waikato identity provider. Clients are registered
+        by University of Waikato ITS; there is no dynamic client registration endpoint in the
+        discovery document.
+  schemas:
+    OpenIdProviderMetadata:
+      type: object
+      description: OpenID Connect Discovery 1.0 metadata as published by this provider.
+      required: [issuer, authorization_endpoint, token_endpoint, jwks_uri]
+      properties:
+        issuer: {type: string, format: uri, const: https://api.svc.waikato.ac.nz/uowidp/v1}
+        authorization_endpoint: {type: string, format: uri}
+        token_endpoint: {type: string, format: uri}
+        end_session_endpoint: {type: string, format: uri}
+        jwks_uri: {type: string, format: uri}
+        userinfo_endpoint:
+          type: string
+          format: uri
+          description: >-
+            Advertised as https://graph.microsoft.com/v1.0/me — Microsoft Graph, not a University
+            of Waikato host. Userinfo is served by the university's Entra ID tenant.
+        scopes_supported:
+          type: array
+          items: {type: string, enum: [openid, profile, email]}
+        response_types_supported:
+          type: array
+          items: {type: string, enum: [code, id_token, code id_token]}
+        response_modes_supported:
+          type: array
+          items: {type: string, enum: [query, fragment, form_post]}
+        id_token_signing_alg_values_supported:
+          type: array
+          items: {type: string, enum: [RS256]}
+        token_endpoint_auth_methods_supported:
+          type: array
+          items: {type: string, enum: [client_secret_post]}
+        claims_supported:
+          type: array
+          items: {type: string, enum: [iss, aud, nbf, exp, iat, nonce, Username, name, ver, oid, sub]}
+        request_uri_parameter_supported: {type: boolean, const: false}
+        http_logout_supported: {type: boolean, const: false}
+        frontchannel_logout_supported: {type: boolean, const: true}
+    JsonWebKeySet:
+      type: object
+      required: [keys]
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            required: [kty, use, kid, e, n]
+            properties:
+              kty: {type: string, const: RSA}
+              use: {type: string, const: sig}
+              kid: {type: string}
+              e: {type: string}
+              n: {type: string}
+    TokenRequest:
+      type: object
+      required: [grant_type, code, redirect_uri, client_id, client_secret]
+      properties:
+        grant_type: {type: string, const: authorization_code}
+        code: {type: string}
+        redirect_uri: {type: string, format: uri}
+        client_id: {type: string}
+        client_secret:
+          type: string
+          description: Sent in the body — `token_endpoint_auth_methods_supported` is client_secret_post.
+    TokenResponse:
+      type: object
+      properties:
+        id_token: {type: string, description: RS256-signed JWT.}
+        token_type: {type: string}
+        expires_in: {type: integer}
+    GatewayError:
+      type: object
+      description: >-
+        Error envelope returned by the api.svc.waikato.ac.nz gateway. Captured live 2026-09-01
+        from an unrouted path.
+      required: [statusCode, message]
+      properties:
+        statusCode: {type: integer, examples: [404]}
+        message: {type: string, examples: ['Resource not found']}
+security:
+- uowidp: []
