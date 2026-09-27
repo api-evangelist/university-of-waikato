@@ -26,16 +26,21 @@ description: >-
   relationship, never as a University of Waikato contract.
 type: Index
 deliveryModel:
-  model: self-hosted
-  open_source: false
-  commercial: false
+  model: saas
+  license_evidence:
+    not_product:
+    - waikato/waikato-repositories
+  open_source: unknown
+  commercial: true
   callable_host: true
-  label: Institution-operated infrastructure · not sold as an API product
-  confidence: medium
+  label: Hosted service · you call their endpoint
+  confidence: low
   source:
-  - probed
-  generated: '2026-09-01'
-  method: probed
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 accessModel:
   pricing: free
   onboarding: none
@@ -66,7 +71,7 @@ tags:
   - SAML
   - OpenID Connect
   - Learning Management
-  - Machine-Learning
+  - Machine Learning
 tags_raw:
   - Education
   - Higher Education
@@ -81,6 +86,7 @@ tags_raw:
   - OpenID Connect
   - Learning Management
   - Machine Learning
+  - Machine-Learning
 created: '2026-06-03'
 modified: '2026-09-01'
 specificationVersion: '0.23'
@@ -199,7 +205,7 @@ apis:
     specification is published and none is generated here.
   humanURL: https://ufdl.cms.waikato.ac.nz/ufdl-api/
   tags:
-  - Machine-Learning
+  - Machine Learning
   - Deep Learning
   - Research
   - Data Science
@@ -208,6 +214,7 @@ apis:
   - Deep Learning
   - Research
   - Data Science
+  - Machine-Learning
   properties:
   - type: Documentation
     url: https://ufdl.cms.waikato.ac.nz/ufdl-api/
