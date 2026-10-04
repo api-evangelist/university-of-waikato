@@ -63,6 +63,34 @@ paths:
                 $ref: '#/components/schemas/JsonWebKeySet'
 components:
   schemas:
+    JsonWebKeySet:
+      type: object
+      required:
+      - keys
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            required:
+            - kty
+            - use
+            - kid
+            - e
+            - n
+            properties:
+              kty:
+                type: string
+                const: RSA
+              use:
+                type: string
+                const: sig
+              kid:
+                type: string
+              e:
+                type: string
+              n:
+                type: string
     OpenIdProviderMetadata:
       type: object
       description: OpenID Connect Discovery 1.0 metadata as published by this provider.
@@ -153,34 +181,6 @@ components:
         frontchannel_logout_supported:
           type: boolean
           const: true
-    JsonWebKeySet:
-      type: object
-      required:
-      - keys
-      properties:
-        keys:
-          type: array
-          items:
-            type: object
-            required:
-            - kty
-            - use
-            - kid
-            - e
-            - n
-            properties:
-              kty:
-                type: string
-                const: RSA
-              use:
-                type: string
-                const: sig
-              kid:
-                type: string
-              e:
-                type: string
-              n:
-                type: string
   securitySchemes:
     uowidp:
       type: openIdConnect

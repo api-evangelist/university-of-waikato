@@ -141,6 +141,21 @@ paths:
             text/html: {}
 components:
   schemas:
+    GatewayError:
+      type: object
+      description: Error envelope returned by the api.svc.waikato.ac.nz gateway. Captured live 2026-09-01 from an unrouted path.
+      required:
+      - statusCode
+      - message
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 404
+        message:
+          type: string
+          examples:
+          - Resource not found
     TokenResponse:
       type: object
       properties:
@@ -173,21 +188,6 @@ components:
         client_secret:
           type: string
           description: Sent in the body — `token_endpoint_auth_methods_supported` is client_secret_post.
-    GatewayError:
-      type: object
-      description: Error envelope returned by the api.svc.waikato.ac.nz gateway. Captured live 2026-09-01 from an unrouted path.
-      required:
-      - statusCode
-      - message
-      properties:
-        statusCode:
-          type: integer
-          examples:
-          - 404
-        message:
-          type: string
-          examples:
-          - Resource not found
   securitySchemes:
     uowidp:
       type: openIdConnect
