@@ -1,24 +1,22 @@
-# Kin Score artifact — university-of-waikato — 2026-09-08T214843
+# Kin Score artifact — university-of-waikato — 2026-10-11T110117
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: university-of-waikato
-  schema_version: 0.20.0
-  scored_at: '2026-09-08'
-  run_ts: 2026-09-08T214843
-  composite: 35.5
+  schema_version: 0.23.0
+  scored_at: '2026-10-11'
+  run_ts: 2026-10-11T110117
+  composite: 31.1
   band: thin
   facets:
-    discoverability: 66.7
-    contract_quality: 27.0
-    governance: 3.8
-    operational_transparency: 23.7
-    developer_ergonomics: 26.2
-    commercial_clarity: 44.7
+    discoverability: 64.3
+    contract_quality: 26.6
     contract_governance: 3.8
-    access_clarity: 44.7
+    operational_transparency: 21.6
+    developer_ergonomics: 26.2
+    access_clarity: 42.6
   agent_readiness:
-    score: 31.3
+    score: 29.4
     band: agent-ready
     dimensions:
       spec_presence: true
@@ -29,7 +27,7 @@ kin_score:
       idempotency: false
       error_semantics: verified
       openapi_examples: partial
-      rate_limit_signal: documented
+      rate_limit_signal: derived
       event_surface_described: false
       agent_skills: false
       well_known_catalog: false
@@ -44,12 +42,12 @@ kin_score:
     applies: true
     regime: Education & Research
     regime_id: education
-    score: 61.1
+    score: 30.0
     matched_via: tags
   provenance:
     conformance: first-party
     contracts:
-      total: 1
-      derived: 1
+      total: 3
+      derived: 3
       coverage: 100.0
       callable: 100.0
