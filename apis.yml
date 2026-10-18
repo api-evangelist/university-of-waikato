@@ -69,7 +69,7 @@ tags:
   - OAI-PMH
   - Identity Federation
   - SAML
-  - Learning Management
+  - LMS
   - Machine Learning
 tags_raw:
   - Education
@@ -154,6 +154,11 @@ apis:
   humanURL: https://elearn.waikato.ac.nz/
   baseURL: https://elearn.waikato.ac.nz/mod/lti/certs.php
   tags:
+  - LMS
+  - LTI
+  - Moodle
+  - Authentication
+  tags_raw:
   - Learning Management
   - LTI
   - Moodle
